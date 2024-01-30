@@ -16,8 +16,7 @@ model User {
   email         String @unique
   password_hash String
 
-  Budget    Budget? @relation(fields: [budget_id], references: [id])
-  budget_id String?
+  Budgets Budget[]
 
   @@map("users")
 }
@@ -26,8 +25,10 @@ model Budget {
   id   String @id @default(uuid())
   name String
 
-  users    User[]
   accounts Account[]
+
+  User    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
 
   @@map("budgets")
 }
@@ -50,10 +51,10 @@ model Transaction {
   amount      Float
   date        DateTime
 
-  Account    Account? @relation(fields: [account_id], references: [id])
-  account_id String?
-
-  categories Category[]
+  Account     Account?  @relation(fields: [account_id], references: [id])
+  account_id  String?
+  Category    Category? @relation(fields: [category_id], references: [id])
+  category_id String?
 
   @@map("transactions")
 }
@@ -62,8 +63,7 @@ model Category {
   id   String @id @default(uuid())
   name String
 
-  Transaction    Transaction? @relation(fields: [transaction_id], references: [id])
-  transaction_id String?
+  transactions Transaction[]
 
   subcategories Subcategory[]
 
