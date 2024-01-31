@@ -11,12 +11,11 @@ datasource db {
 }
 
 model User {
-  id            String @id @default(uuid())
+  id            String       @id @default(uuid())
   name          String
-  email         String @unique
+  email         String       @unique
   password_hash String
-
-  Budgets Budget[]
+  UserBudget    UserBudget[]
 
   @@map("users")
 }
@@ -25,20 +24,28 @@ model Budget {
   id   String @id @default(uuid())
   name String
 
-  accounts Account[]
-
-  User    User?   @relation(fields: [user_id], references: [id])
-  user_id String?
+  accounts   Account[]
+  UserBudget UserBudget[]
 
   @@map("budgets")
+}
+
+model UserBudget {
+  user_id   String
+  budget_id String
+
+  user   User   @relation(fields: [user_id], references: [id])
+  budget Budget @relation(fields: [budget_id], references: [id])
+
+  @@id([user_id, budget_id])
 }
 
 model Account {
   id   String @id @default(uuid())
   name String
 
-  Budget    Budget? @relation(fields: [budget_id], references: [id])
-  budget_id String?
+  Budget    Budget @relation(fields: [budget_id], references: [id])
+  budget_id String
 
   transactions Transaction[]
 
@@ -51,8 +58,8 @@ model Transaction {
   amount      Float
   date        DateTime
 
-  Account     Account?  @relation(fields: [account_id], references: [id])
-  account_id  String?
+  Account     Account   @relation(fields: [account_id], references: [id])
+  account_id  String
   Category    Category? @relation(fields: [category_id], references: [id])
   category_id String?
 
@@ -74,8 +81,8 @@ model Subcategory {
   id   String @id @default(uuid())
   name String
 
-  Category    Category? @relation(fields: [category_id], references: [id])
-  category_id String?
+  Category    Category @relation(fields: [category_id], references: [id])
+  category_id String
 
   @@map("subcategories")
 }
