@@ -1,12 +1,12 @@
 import { InMemoryUsersRepository } from "@/repositories/In-memory/in-memory-user-repository";
 import { compare } from "bcryptjs";
-import { it } from "node:test";
-import { beforeEach, describe, expect } from "vitest";
-import { UserAlreadyExistsError } from "./errors/user-already-exists.error";
+import { beforeEach, describe, expect, it } from "vitest";
+import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
 import { RegisterUseCase } from "./register";
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let sut: RegisterUseCase;
+
 describe("Register Use Case", () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
@@ -32,7 +32,7 @@ describe("Register Use Case", () => {
 
     const isPasswordCorrectlyHashed = await compare(
       "123456",
-      user.hash_password,
+      user.password_hash,
     );
 
     expect(isPasswordCorrectlyHashed).toBe(true);
@@ -48,7 +48,7 @@ describe("Register Use Case", () => {
     });
 
     expect(async () => {
-      sut.execute({
+      await sut.execute({
         name: "John Doe",
         email,
         password: "123456",
