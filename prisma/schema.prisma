@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id            String       @id @default(uuid())
+  id            String @id @default(uuid())
   name          String
-  email         String       @unique
+  email         String @unique
   password_hash String
-  UserBudget    UserBudget[]
+
+  budgets UserBudget[]
 
   @@map("users")
 }
@@ -24,8 +25,9 @@ model Budget {
   id   String @id @default(uuid())
   name String
 
-  accounts   Account[]
-  UserBudget UserBudget[]
+  accounts Account[]
+
+  users UserBudget[]
 
   @@map("budgets")
 }
@@ -36,8 +38,11 @@ model UserBudget {
   user_id   String
   budget_id String
 
+  // Foreign keys
   User   User   @relation(fields: [user_id], references: [id])
   Budget Budget @relation(fields: [budget_id], references: [id])
+
+  @@map("user_budgets")
 }
 
 model Account {
