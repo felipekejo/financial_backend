@@ -24,8 +24,8 @@ export class CreateBudgetUseCase {
   }: CreateBudgetUseCaseRequest): Promise<CreateBudgetUseCaseResponse> {
     const budget = await this.budgetsRepository.create({ name });
     await this.userBudgetsRepository.connectToUser({
-      budgetId: budget.id,
-      userId,
+      budget_id: budget.id,
+      user_id: userId,
     });
     return { budget };
   }
