@@ -26,14 +26,4 @@ export class InMemoryBudgetsRepository implements BudgetsRepository {
 
     return budget;
   }
-
-  async connectToUser(data: Prisma.UserBudgetCreateInput) {
-    const connection = {
-      id: randomUUID(),
-      userId: data.User,
-      budgetId: data.Budget,
-    };
-
-    this.connections.push(connection);
-  }
 }
