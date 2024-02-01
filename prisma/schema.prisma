@@ -31,13 +31,13 @@ model Budget {
 }
 
 model UserBudget {
+  id String @id @default(uuid())
+
   user_id   String
   budget_id String
 
-  user   User   @relation(fields: [user_id], references: [id])
-  budget Budget @relation(fields: [budget_id], references: [id])
-
-  @@id([user_id, budget_id])
+  User   User   @relation(fields: [user_id], references: [id])
+  Budget Budget @relation(fields: [budget_id], references: [id])
 }
 
 model Account {
