@@ -3,6 +3,7 @@ import { Category } from "@prisma/client";
 
 interface CreateCategoryUseCaseRequest {
   name: string;
+  type: "INCOME" | "EXPENSES";
 }
 
 interface CreateCategoryUseCaseResponse {
@@ -17,6 +18,7 @@ export class CreateCategoryUseCase {
   ): Promise<CreateCategoryUseCaseResponse> {
     const category = await this.categoriesRepository.create({
       name: data.name,
+      type: data.type,
     });
 
     return { category };

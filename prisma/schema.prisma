@@ -57,11 +57,17 @@ model Account {
   @@map("accounts")
 }
 
+enum Type {
+  EXPENSES
+  INCOME
+}
+
 model Transaction {
   id          String   @id @default(uuid())
   description String
   amount      Float
   date        DateTime
+  type        Type     @default(EXPENSES)
 
   Account     Account   @relation(fields: [account_id], references: [id])
   account_id  String
@@ -77,6 +83,7 @@ model Transaction {
 model Category {
   id   String @id @default(uuid())
   name String
+  type Type   @default(EXPENSES)
 
   transactions Transaction[]
 

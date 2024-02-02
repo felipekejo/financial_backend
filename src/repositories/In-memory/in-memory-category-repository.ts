@@ -8,6 +8,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     const category = {
       id: data.id ?? randomUUID(),
       name: data.name,
+      type: data.type ?? "EXPENSES",
     };
     this.items.push(category);
     return category;
