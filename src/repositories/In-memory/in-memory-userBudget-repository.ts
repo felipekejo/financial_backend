@@ -1,4 +1,4 @@
-import { Prisma, Budget, UserBudget } from "@prisma/client";
+import { Prisma, UserBudget } from "@prisma/client";
 
 import { randomUUID } from "node:crypto";
 import { UserBudgetsRepository } from "../userBudget-repository";

@@ -59,21 +59,20 @@ model Account {
 
 enum Type {
   EXPENSES
-  INCOME
+  INCOMES
 }
 
 model Transaction {
   id          String   @id @default(uuid())
   description String
   amount      Float
-  date        DateTime
   type        Type     @default(EXPENSES)
+  created_at  DateTime @default(now())
 
-  Account     Account   @relation(fields: [account_id], references: [id])
-  account_id  String
-  Category    Category? @relation(fields: [category_id], references: [id])
-  category_id String?
-
+  Account        Account      @relation(fields: [account_id], references: [id])
+  account_id     String
+  Category       Category?    @relation(fields: [category_id], references: [id])
+  category_id    String?
   Subcategory    Subcategory? @relation(fields: [subcategory_id], references: [id])
   subcategory_id String?
 

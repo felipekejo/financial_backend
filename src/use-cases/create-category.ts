@@ -3,7 +3,7 @@ import { Category } from "@prisma/client";
 
 interface CreateCategoryUseCaseRequest {
   name: string;
-  type: "INCOME" | "EXPENSES";
+  type: "INCOMES" | "EXPENSES";
 }
 
 interface CreateCategoryUseCaseResponse {
