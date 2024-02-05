@@ -1,6 +1,6 @@
+import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { TransactionsRepository } from "../transaction-repository";
-import { prisma } from "@/lib/prisma";
 
 export class PrismaTransactionsRepository implements TransactionsRepository {
   async create(data: Prisma.TransactionUncheckedCreateInput) {
@@ -15,6 +15,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
     const transaction = await prisma.transaction.findUnique({
       where: {
         id,
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
 

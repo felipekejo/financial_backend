@@ -17,4 +17,26 @@ export class InMemoryUserBudgetRepository implements UserBudgetsRepository {
 
     return userBudget;
   }
+
+  async createUserConnectToBudget(
+    name: string,
+    email: string,
+    password_hash: string,
+    budgetId: string,
+  ) {
+    const user = {
+      id: randomUUID(),
+      name,
+      email,
+      password_hash,
+    };
+    const userBudget = {
+      id: randomUUID(),
+      user_id: user.id,
+      budget_id: budgetId,
+    };
+
+    this.items.push(userBudget);
+    return userBudget;
+  }
 }
