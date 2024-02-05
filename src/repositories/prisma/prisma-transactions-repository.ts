@@ -38,6 +38,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
       where: {
         account_id: accountId,
       },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return transactions;
@@ -49,6 +61,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
         account_id: accountId,
         category_id: categoryId,
       },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return transactions;
@@ -59,6 +83,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
       where: {
         account_id: accountId,
         type,
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
 
@@ -72,6 +108,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
         created_at: {
           gte: new Date(`${year}-01-01`),
           lte: new Date(`${year}-12-31`),
+        },
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
         },
       },
     });
@@ -91,6 +139,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
           lt: new Date(`${nextYear}-${nextMonth}-01`),
         },
       },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return transactions;
   }
@@ -102,6 +162,18 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
         created_at: {
           gte: new Date(date),
           lte: new Date(date),
+        },
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Subcategory: {
+          select: {
+            name: true,
+          },
         },
       },
     });

@@ -1,20 +1,21 @@
 import { Prisma, Transaction } from "@prisma/client";
-import { TransactionsRepository } from "../transaction-repository";
 import { randomUUID } from "crypto";
+import { TransactionsRepository } from "../transaction-repository";
 
 export class InMemoryTransactionsRepository implements TransactionsRepository {
   public items: Transaction[] = [];
   async create(data: Prisma.TransactionUncheckedCreateInput) {
-    const transaction = {
+    const transaction: Transaction = {
       id: data.id ?? randomUUID(),
       description: data.description,
       amount: data.amount,
-      type: data.type,
-      category_id: data.category_id,
-      subcategory_id: data.subcategory_id,
+      type: data.type ?? "EXPENSES",
+      category_id: data.category_id ?? null,
+      subcategory_id: data.subcategory_id ?? null,
       account_id: data.account_id,
-      created_at: data.created_at ?? new Date(),
+      created_at: new Date(),
     };
+
     this.items.push(transaction);
 
     return transaction;
@@ -35,9 +36,6 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
       (item) => item.account_id === accountId,
     );
 
-    if (!transactions) {
-      return null;
-    }
     return transactions;
   }
 
