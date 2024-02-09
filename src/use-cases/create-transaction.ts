@@ -21,6 +21,9 @@ export class CreateTransactionsUseCase {
   async execute(
     data: CreateTransactionsUseCaseRequest,
   ): Promise<CreateTransactionsUseCaseResponse> {
+    if (data.amount <= 0) {
+      throw new Error("Amount must be greater than 0");
+    }
     const transaction = await this.transactionsRepository.create({
       description: data.description,
       amount: data.amount,
