@@ -109,4 +109,12 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
     }, 0);
     return sumAmount;
   }
+
+  async save(data: Transaction) {
+    const index = this.items.findIndex((item) => item.id === data.id);
+    if (index >= 0) {
+      this.items[index] = data;
+    }
+    return data;
+  }
 }

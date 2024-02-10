@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, Transaction } from "@prisma/client";
 import { TransactionsRepository } from "../transaction-repository";
 
 export class PrismaTransactionsRepository implements TransactionsRepository {
@@ -212,5 +212,16 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
       },
     });
     return (await sumAmount)._sum.amount || 0;
+  }
+
+  async save(data: Transaction) {
+    const transaction = await prisma.transaction.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    });
+
+    return transaction;
   }
 }

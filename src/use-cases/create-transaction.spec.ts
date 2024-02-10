@@ -77,4 +77,17 @@ describe("Create Transaction Use Case", () => {
 
     expect(transaction.subcategory_id).toEqual(expect.any(String));
   });
+  it("should be able to create a transaction without a category and subcategory", async () => {
+    const { transaction } = await sut.execute({
+      description: "new expense",
+      amount: 100,
+      type: "EXPENSES",
+      accountId: "account-01",
+      categoryId: "",
+      subcategoryId: "",
+      created_at: new Date("2022-01-01T00:00:00.000Z"),
+    });
+
+    expect(transaction.id).toEqual(expect.any(String));
+  });
 });

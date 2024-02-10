@@ -28,4 +28,6 @@ export interface TransactionsRepository {
     accountId: string,
     type: "EXPENSES" | "INCOMES",
   ): Promise<number>;
+
+  save(data: Transaction): Promise<Transaction>;
 }
