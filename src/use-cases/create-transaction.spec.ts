@@ -18,7 +18,6 @@ describe("Create Transaction Use Case", () => {
       accountId: "account-01",
       categoryId: "category-01",
       subcategoryId: "subcategory-01",
-      created_at: new Date("2022-01-01T00:00:00.000Z"),
     });
 
     expect(transaction.id).toEqual(expect.any(String));
@@ -31,7 +30,6 @@ describe("Create Transaction Use Case", () => {
       accountId: "account-01",
       categoryId: "category-01",
       subcategoryId: "subcategory-01",
-      created_at: new Date("2022-01-01T00:00:00.000Z"),
     });
 
     expect(transaction.id).toEqual(expect.any(String));
@@ -46,7 +44,6 @@ describe("Create Transaction Use Case", () => {
         accountId: "account-01",
         categoryId: "category-01",
         subcategoryId: "subcategory-01",
-        created_at: new Date("2022-01-01T00:00:00.000Z"),
       }),
     ).rejects.toThrow("Amount must be greater than 0");
   });
@@ -59,7 +56,6 @@ describe("Create Transaction Use Case", () => {
       accountId: "account-01",
       categoryId: "",
       subcategoryId: "subcategory-01",
-      created_at: new Date("2022-01-01T00:00:00.000Z"),
     });
 
     expect(transaction.id).toEqual(expect.any(String));
@@ -72,7 +68,6 @@ describe("Create Transaction Use Case", () => {
       accountId: "account-01",
       categoryId: "category-01",
       subcategoryId: "",
-      created_at: new Date("2022-01-01T00:00:00.000Z"),
     });
 
     expect(transaction.subcategory_id).toEqual(expect.any(String));
@@ -85,7 +80,6 @@ describe("Create Transaction Use Case", () => {
       accountId: "account-01",
       categoryId: "",
       subcategoryId: "",
-      created_at: new Date("2022-01-01T00:00:00.000Z"),
     });
 
     expect(transaction.id).toEqual(expect.any(String));

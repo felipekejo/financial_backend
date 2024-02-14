@@ -6,7 +6,6 @@ interface CreateTransactionsUseCaseRequest {
   amount: number;
   type: "INCOMES" | "EXPENSES";
   accountId: string;
-  created_at: Date;
   categoryId: string;
   subcategoryId: string;
 }
@@ -29,7 +28,6 @@ export class CreateTransactionsUseCase {
       amount: data.amount,
       type: data.type,
       account_id: data.accountId,
-      created_at: new Date(),
       category_id: data.categoryId ?? null,
       subcategory_id: data.subcategoryId ?? null,
     });
