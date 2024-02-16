@@ -16,23 +16,19 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const { description, amount, type, accountId, categoryId, subcategoryId } =
     createTransactionBodySchema.parse(request.body);
 
-  try {
-    const prismaTransactionsRepository = new PrismaTransactionsRepository();
-    const transactionsUseCase = new CreateTransactionsUseCase(
-      prismaTransactionsRepository,
-    );
+  const prismaTransactionsRepository = new PrismaTransactionsRepository();
+  const transactionsUseCase = new CreateTransactionsUseCase(
+    prismaTransactionsRepository,
+  );
 
-    const transaction = await transactionsUseCase.execute({
-      description,
-      amount,
-      type,
-      accountId,
-      categoryId,
-      subcategoryId,
-    });
+  const transaction = await transactionsUseCase.execute({
+    description,
+    amount,
+    type,
+    accountId,
+    categoryId,
+    subcategoryId,
+  });
 
-    return reply.status(201).send(transaction);
-  } catch (error) {
-    return reply.status(400).send({ message: error });
-  }
+  return reply.status(201).send(transaction);
 }
