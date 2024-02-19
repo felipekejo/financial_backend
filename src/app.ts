@@ -5,6 +5,8 @@ import { accountsRoutes } from "./http/controllers/accounts/routes";
 import { budgetsRoutes } from "./http/controllers/budgets/routes";
 import { transactionsRoutes } from "./http/controllers/transactions/routes";
 import { usersRoutes } from "./http/controllers/users/routes";
+import { categoriesRoutes } from "./http/controllers/categories/routes";
+import { subcategoriesRoutes } from "./http/controllers/subcategories/route";
 
 export const app = fastify();
 
@@ -12,6 +14,8 @@ app.register(usersRoutes);
 app.register(transactionsRoutes);
 app.register(accountsRoutes);
 app.register(budgetsRoutes);
+app.register(categoriesRoutes);
+app.register(subcategoriesRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
