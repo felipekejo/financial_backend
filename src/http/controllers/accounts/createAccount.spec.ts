@@ -12,17 +12,10 @@ describe("Create Account (e2e)", () => {
   });
 
   it("should be able to create a new account", async () => {
-    const user = await prisma.user.create({
-      data: {
-        name: "John Doe",
-        email: "johndoe1@example.com",
-        password_hash: "123456",
-      },
-    });
-
     const budget = await prisma.budget.create({
-      name: "new budget",
-      userId: user.id,
+      data: {
+        name: "new budget",
+      },
     });
 
     const response = await request(app.server).post("/accounts").send({
