@@ -10,4 +10,18 @@ export class PrismaAccountsRepository implements AccountsRepository {
 
     return account;
   }
+
+  async findById(id: string) {
+    const account = await prisma.account.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!account) {
+      return null;
+    }
+
+    return account;
+  }
 }

@@ -6,6 +6,19 @@ export class InMemorySubcategoriesRepository
   implements SubcategoriesRepository
 {
   public items: Subcategory[] = [];
+
+  async findById(id: string) {
+    const subcategory = this.items.find((item) => {
+      return item.id === id;
+    });
+
+    if (!subcategory) {
+      return null;
+    }
+
+    return subcategory;
+  }
+
   async create(data: Prisma.SubcategoryUncheckedCreateInput) {
     const subcategory = {
       id: data.id ?? randomUUID(),
