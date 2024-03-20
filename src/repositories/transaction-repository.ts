@@ -30,4 +30,6 @@ export interface TransactionsRepository {
   ): Promise<number>;
 
   save(data: Transaction): Promise<Transaction>;
+
+  delete(id: string): Promise<void>;
 }
