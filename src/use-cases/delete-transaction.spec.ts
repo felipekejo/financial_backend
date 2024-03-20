@@ -1,6 +1,7 @@
 import { InMemoryTransactionsRepository } from "@/repositories/In-memory/in-memory-transactions-repository";
 import { beforeEach, describe, expect, it } from "vitest";
 import { DeleteTransactionsUseCase } from "./delete-transaction";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let inMemoryTransactionsRepository: InMemoryTransactionsRepository;
 let sut: DeleteTransactionsUseCase;
@@ -19,9 +20,12 @@ describe("Delete Transaction Use Case", async () => {
       category_id: "category-01",
       subcategory_id: "subcategory-01",
     });
-
-    sut.execute(transaction.id);
-
+    await sut.execute(transaction.id);
     expect(inMemoryTransactionsRepository.items).toHaveLength(0);
+  });
+  it("should not be able to delete a non-existing transaction", async () => {
+    expect(
+      async () => await sut.execute("non-existent-id"),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
