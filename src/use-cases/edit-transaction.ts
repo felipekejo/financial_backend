@@ -33,5 +33,20 @@ export class EditTransactionsUseCase {
     if (!transaction) {
       throw new ResourceNotFoundError();
     }
+
+    const updatedTransaction = await this.transactionsRepository.save({
+      id: transactionId,
+      description,
+      amount,
+      type,
+      created_at: transaction.created_at,
+      account_id: accountId,
+      category_id: categoryId,
+      subcategory_id: subcategoryId,
+    });
+
+    return {
+      transaction: updatedTransaction,
+    };
   }
 }
