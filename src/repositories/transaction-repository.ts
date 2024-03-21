@@ -3,6 +3,7 @@ import { Prisma, Transaction } from "@prisma/client";
 export interface TransactionsRepository {
   create(data: Prisma.TransactionUncheckedCreateInput): Promise<Transaction>;
   findById(id: string): Promise<Transaction | null>;
+  findByBudgetId(budgetId: string): Promise<Transaction[]>;
   findByAccountId(accountId: string): Promise<Transaction[]>;
   findByCategoryId(
     categoryId: string,

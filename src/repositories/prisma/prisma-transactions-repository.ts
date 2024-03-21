@@ -63,6 +63,36 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
     return transactions;
   }
 
+  async findByBudgetId(budgetId: string) {
+    const budget = await prisma.budget.findMany({
+      where: {
+        id: budgetId,
+      },
+      select: {
+        accounts: {
+          select: {
+            transactions: {
+              include: {
+                Category: {
+                  select: {
+                    name: true,
+                  },
+                },
+                Subcategory: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return budget[0].accounts[0].transactions as Transaction[];
+  }
+
   async findByCategoryId(categoryId: string, accountId: string) {
     const transactions = await prisma.transaction.findMany({
       where: {
