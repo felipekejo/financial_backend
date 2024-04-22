@@ -70,7 +70,7 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
       },
       select: {
         accounts: {
-          select: {
+          include: {
             transactions: {
               include: {
                 Category: {
