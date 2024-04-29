@@ -4,12 +4,16 @@ services:
   api-solid-pg:
     container_name: api-solid-pg
     image: bitnami/postgresql
+    volumes:
+      - postgres_data:/bitnami/postgresql
     ports:
       - 5432:5432
     environment:
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=postgres
       - POSTGRESQL_DATABASE=apisolid
+    networks:
+      - first-network    
   financial_backend:
     build: 
       context: .
@@ -18,3 +22,10 @@ services:
       - 3333:3333
     depends_on:
       - api-solid-pg
+    networks:
+      - first-network
+networks:
+  first-network:
+    driver: bridge
+volumes:
+  postgres_data:
