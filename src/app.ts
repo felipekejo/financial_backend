@@ -1,12 +1,13 @@
+import fastifyJwt from "@fastify/jwt";
 import fastify from "fastify";
 import { ZodError } from "zod";
 import { env } from "./env";
 import { accountsRoutes } from "./http/controllers/accounts/routes";
 import { budgetsRoutes } from "./http/controllers/budgets/routes";
-import { transactionsRoutes } from "./http/controllers/transactions/routes";
-import { usersRoutes } from "./http/controllers/users/routes";
 import { categoriesRoutes } from "./http/controllers/categories/routes";
 import { subcategoriesRoutes } from "./http/controllers/subcategories/route";
+import { transactionsRoutes } from "./http/controllers/transactions/routes";
+import { usersRoutes } from "./http/controllers/users/routes";
 
 export const app = fastify();
 
@@ -16,6 +17,10 @@ app.register(accountsRoutes);
 app.register(budgetsRoutes);
 app.register(categoriesRoutes);
 app.register(subcategoriesRoutes);
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
