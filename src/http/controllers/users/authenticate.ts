@@ -21,7 +21,18 @@ export async function authenticate(
 
     const { user } = await authenticateUseCase.execute({ email, password });
 
-    reply.status(200).send({ user });
+    const token = await reply.jwtSign(
+      {
+        sub: user.id,
+      },
+      {
+        sign: {
+          expiresIn: "7d",
+        },
+      },
+    );
+
+    reply.status(200).send({ token });
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
       return reply.status(401).send({ message: error.message });
