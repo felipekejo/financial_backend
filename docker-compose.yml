@@ -1,31 +1,30 @@
 version : '3'
 
 services:
-  api-solid-pg:
-    container_name: api-solid-pg
-    image: bitnami/postgresql
-    volumes:
-      - postgres_data:/bitnami/postgresql
+  financial_backend-pg:
+    image: postgres:16.2-alpine3.19
     ports:
       - 5432:5432
     environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=postgres
-      - POSTGRESQL_DATABASE=apisolid
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     networks:
-      - first-network    
+      - financial 
   financial_backend:
     build: 
       context: .
     container_name: financial_backend
     ports:
       - 3333:3333
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@financial_backend-pg:5432/financial
+      - NODE_ENV=dev
+      - PORT=3333
     depends_on:
-      - api-solid-pg
+      - financial_backend-pg
     networks:
-      - first-network
+      - financial
 networks:
-  first-network:
+  financial:
     driver: bridge
-volumes:
-  postgres_data:

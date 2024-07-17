@@ -1,4 +1,4 @@
-FROM node:18-alpine3.19 AS build
+FROM node:20 AS build
 
 WORKDIR /usr/src/app
 
@@ -10,18 +10,18 @@ COPY . .
  
 RUN npm run build
 
-FROM node:18-alpine3.19 as deploy
+FROM node:20-alpine3.20 as deploy
 
 WORKDIR /usr/src/app
 
 RUN npm install prisma
 
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/build ./build
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/package.json ./package.json
 COPY --from=build /usr/src/app/prisma ./prisma
 
-RUN npx prisma migrate deploy
+RUN npx prisma generate
 
 EXPOSE 3333
 
