@@ -4,6 +4,14 @@ import { TransactionsRepository } from "../transaction-repository";
 
 export class InMemoryTransactionsRepository implements TransactionsRepository {
   public items: Transaction[] = [];
+
+  async findByBudgetId(budgetId: string): Promise<Transaction[]> {
+    const transactions = this.items.filter(
+      (item) => item.account_id === budgetId,
+    );
+    return transactions;
+  }
+
   async create(data: Prisma.TransactionUncheckedCreateInput) {
     const transaction: Transaction = {
       id: data.id ?? randomUUID(),
