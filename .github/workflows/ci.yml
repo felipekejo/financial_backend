@@ -30,7 +30,7 @@ jobs:
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
       - name: Build Docker Image
-        run: npm run build -t kejorox/financial_backend:${{ steps.generate_tag.outputs.sha }} .
+        run: docker build -t kejorox/financial_backend:${{ steps.generate_tag.outputs.sha }} .
 
 
 
