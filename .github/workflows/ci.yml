@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,3 +19,15 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm run test
+
+      - name: Generate tag
+        id: generate_tag
+        run : |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Build Docker Image
+        run: npm run build -t kejorox/financial_backend:${{ steps.generate_tag.outputs.sha }} .
+
+
+
