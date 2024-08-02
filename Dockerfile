@@ -13,7 +13,7 @@ RUN npm run build
 FROM node:20-alpine3.20 as deploy
 
 WORKDIR /usr/src/app
-
+ 
 RUN npm install prisma
 
 COPY --from=build /usr/src/app/build ./build
